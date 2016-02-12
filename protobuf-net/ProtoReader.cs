@@ -525,6 +525,12 @@ namespace ProtoBuf
             string desc = type == null ? "<null>" : type.FullName;
             throw AddErrorData(new ProtoException("No " + desc + " enum is mapped to the wire-value " + value.ToString()), this);
         }
+		// this is for avoid Enum value exception
+		// when undefine value is set while reading.
+		// Set default value instead of Exception.
+		public void DontThrowEnumException(System.Type type, int value)
+		{
+		}
         private Exception CreateWireTypeException()
         {
             return CreateException("Invalid wire-type; this usually means you have over-written a file without truncating or setting the length; see http://stackoverflow.com/q/2152978/23354");

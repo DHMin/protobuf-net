@@ -115,7 +115,8 @@ namespace ProtoBuf.Serializers
                     return map[i].TypedValue;
                 }
             }
-            source.ThrowEnumException(ExpectedType, wireValue);
+			// To set default value, do not throw the exception.
+//            source.ThrowEnumException(ExpectedType, wireValue);
             return null; // to make compiler happy
         }
         public void Write(object value, ProtoWriter dest)
@@ -236,7 +237,7 @@ namespace ProtoBuf.Serializers
                     ctx.LoadReaderWriter();
                     ctx.LoadValue(ExpectedType);
                     ctx.LoadValue(wireValue);
-                    ctx.EmitCall(ctx.MapType(typeof(ProtoReader)).GetMethod("ThrowEnumException"));
+					ctx.EmitCall(ctx.MapType(typeof(ProtoReader)).GetMethod("DontThrowEnumException"));
                     ctx.MarkLabel(@continue);
                     ctx.LoadValue(result);
                 }
